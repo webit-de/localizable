@@ -9,17 +9,13 @@
 
 # This plugin should be reloaded in development mode.
 if (Rails.env == "development")
-  ActiveSupport::Dependencies.autoload_once_paths.reject!{|x| x =~ /^#{Regexp.escape(File.dirname(__FILE__))}/}
+  Rails.application.config.autoload_once_paths = Rails.application.config.autoload_once_paths.reject{|x| x =~ /^#{Regexp.escape(File.dirname(__FILE__))}/}
 end
 
-require "redmine"
-require "rubygems"
-require_dependency "localizable/view_hooks"
-
 Rails.configuration.to_prepare do
-  require_dependency 'project'
-  require_dependency 'principal'
-  require_dependency 'user'
+  require 'project'
+  require 'principal'
+  require 'user'
   User.send(:include, Localizable::UserPatch)
 end
 
@@ -44,3 +40,5 @@ Redmine::Plugin.register :localizable do
                                       "issue_status" => {}}},
            :partial => "settings/localizable")
 end
+
+require "#{File.dirname(__FILE__)}/lib/localizable/view_hooks"

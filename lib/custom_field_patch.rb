@@ -7,9 +7,6 @@
 #   * No derivates of this plugin (or partial) are allowed.
 # Take a look to licence.txt file at plugin root folder for further details.
 
-require_dependency "custom_field"
-require "localizable"
-
 module CustomFieldPatch
   def self.included(base)
     base.class_eval do
